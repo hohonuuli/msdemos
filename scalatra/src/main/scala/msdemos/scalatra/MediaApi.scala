@@ -6,7 +6,12 @@ import msdemos.shared.ResponseBuilder.*
 
 object MediaApi extends ScalatraServlet {
 
-  get("/:i/:j/:j") {
+  before() {
+    contentType = "application/json"
+    response.headers.set("Access-Control-Allow-Origin", "*")
+  }
+
+  get("/:i/:j/:k") {
     val i = params.getAs[Int]("i").get
     val j = params.getAs[Int]("j").get
     val k = params.getAs[Int]("k").get

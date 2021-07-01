@@ -2,7 +2,7 @@ import org.scalatra.LifeCycle
 import javax.servlet.ServletContext
 import msdemos.scalatra.MediaApi
 
-object ScalatraBootstrap extends LifeCycle {
+class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext): Unit = {
 
