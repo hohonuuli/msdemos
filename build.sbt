@@ -14,6 +14,8 @@ lazy val shared = (project in file("shared"))
       circeCore,
       circeGeneric,
       circeParser,
+      jackson,
+      jacksonTime,
       junit % "test"
     )
   )
@@ -31,6 +33,18 @@ lazy val `msdemo-helidon` = (project in file("helidon"))
       junit % "test"
     )
   )
+
+lazy val `msdemo-javalin` = (project in file("javalin"))
+  .dependsOn(shared)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    // name := "msdemo-zhttp",
+    libraryDependencies ++= Seq(
+      junit % "test",
+      javalin
+    )
+  )
+
 
 lazy val `msdemo-sparkjava` = (project in file("sparkjava"))
   .dependsOn(shared)

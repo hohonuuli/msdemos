@@ -4,19 +4,20 @@ import io.helidon.common.LogConfig
 import io.helidon.webserver.WebServer
 import io.helidon.config.Config
 import io.helidon.webserver.Routing
-import io.helidon.media.jsonp.JsonpSupport
 import io.helidon.common.reactive.Single
+import _root_.io.helidon.media.jsonb.JsonbSupport
 
 object Main {
 
   def main(args: Array[String]): Unit = startServer()
 
-  def startServer(): Single[WebServer] = {
+  private def startServer(): Single[WebServer] = {
     //LogConfig.configureRuntime()
     val config = Config.create();
 
     val server = WebServer.builder(createRouting(config))
       .config(config.get("server"))
+      .addMediaSupport(JsonbSupport.create())
       .build();
 
     val webserver = server.start()
@@ -34,7 +35,7 @@ object Main {
     webserver
   }
 
-  def createRouting(config: Config): Routing = {
+  private def createRouting(config: Config): Routing = {
     Routing.builder()
       .register("/media", new MediaService)
       .build()

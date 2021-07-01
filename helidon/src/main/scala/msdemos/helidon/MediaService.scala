@@ -5,7 +5,9 @@ import io.helidon.webserver.ServerRequest
 import io.helidon.webserver.ServerResponse
 import io.helidon.webserver.Service
 import msdemos.shared.RequestCounts
+import msdemos.shared.jdk.RequestCounts as JRequestCounts
 import msdemos.shared.ResponseBuilder.*
+import scala.jdk.CollectionConverters.*
 
 class MediaService extends Service {
 
@@ -21,13 +23,13 @@ class MediaService extends Service {
     val j = req.path.param("j").toInt
     val k = req.path.param("k").toInt
     val rc = RequestCounts(i, j, k)
-    res.send(responseFromRequestCount(rc))
+    res.send(from(rc).asJava)
   }
 
   private def handlePost(req: ServerRequest, res: ServerResponse): Unit =
     req.content
-      .as(classOf[String])
-      .thenAccept(body => res.send(responseFromJsonBody(body)))
+      .as(classOf[JRequestCounts])
+      .thenAccept(body => res.send(from(body.asScala).asJava))
   
   
 }
