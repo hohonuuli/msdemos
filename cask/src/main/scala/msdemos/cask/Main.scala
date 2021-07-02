@@ -1,7 +1,7 @@
 package msdemos.cask
 
 import msdemos.shared.RequestCounts
-import msdemos.shared.ResponseBuilder.*
+import msdemos.shared.CirceHelper
 import msdemos.shared.VideoSequence
 import msdemos.shared.VideoReference
 import msdemos.shared.Video
@@ -22,7 +22,7 @@ object Main extends cask.MainRoutes {
   def handlePost(i: Int, j: Int, k: Int) = handle(i, j, k)
 
   private def handle(i: Int, j: Int, k: Int) = {
-    responseFromRequestCount(RequestCounts(i, j, k))
+    CirceHelper.buildJsonResponse(RequestCounts(i, j, k))
     // upickle.default.write(from(RequestCounts(i, j, k)))
   }
 

@@ -1,3 +1,5 @@
+package msdemos.scalatra
+
 import org.eclipse.jetty.server._
 import org.eclipse.jetty.servlet.FilterHolder
 import org.eclipse.jetty.webapp.WebAppContext

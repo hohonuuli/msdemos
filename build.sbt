@@ -31,12 +31,23 @@ lazy val `msdemo-cask` = (project in file("cask"))
     )
   )
 
+lazy val `msdemo-finatra` = (project in file("finatra"))
+  .dependsOn(shared)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    libraryDependencies ++= Seq(
+      finatraHttp,
+      junit % "test"
+    )
+  )
+
   lazy val `msdemo-helidon` = (project in file("helidon"))
   .dependsOn(shared)
   .enablePlugins(JavaAppPackaging)
   .settings(
     libraryDependencies ++= Seq(
       helidonConfig,
+      helidonCors,
       helidonMedia,
       helidonWebserver,
       junit % "test"

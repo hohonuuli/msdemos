@@ -5,7 +5,9 @@ import io.helidon.webserver.WebServer
 import io.helidon.config.Config
 import io.helidon.webserver.Routing
 import io.helidon.common.reactive.Single
-import _root_.io.helidon.media.jsonb.JsonbSupport
+import io.helidon.media.jsonb.JsonbSupport
+import _root_.io.helidon.webserver.cors.CorsSupport
+import _root_.io.helidon.webserver.cors.CrossOriginConfig
 
 object Main {
 
@@ -36,8 +38,16 @@ object Main {
   }
 
   private def createRouting(config: Config): Routing = {
+    val corsSupport = CorsSupport.builder()
+      .addCrossOrigin(CrossOriginConfig.builder()
+        .allowOrigins("*")
+        .allowMethods("GET", "PUT")
+        .build())
+      .addCrossOrigin(CrossOriginConfig.create())
+      .build();
+
     Routing.builder()
-      .register("/media", new MediaService)
+      .register("/media", corsSupport, new MediaService)
       .build()
   }
 }

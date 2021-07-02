@@ -1,11 +1,12 @@
 package msdemos.sparkjava
 
 import spark.Spark.*
-import msdemos.shared.RequestCounts
-import msdemos.shared.ResponseBuilder.*
+import msdemos.shared.{CirceHelper, RequestCounts, ResponseBuilder}
 
 object Main {
   def main(args: Array[String]): Unit = {
+
+    after((req, res) => res.header("Access-Control-Allow-Origin", "*"))
 
     port(8080)
 
@@ -15,12 +16,12 @@ object Main {
       val k = req.params("k").toInt
       val rc = RequestCounts(i, j, k)
       res.`type`("application/json")
-      responseFromRequestCount(rc)
+      CirceHelper.buildJsonResponse(rc)
     })
 
     post("/media/demo", (req, res) => {
       res.`type`("application/json")
-      responseFromJsonBody(req.body)
+      CirceHelper.buildJsonResponse(req.body)
     })
   }
 }

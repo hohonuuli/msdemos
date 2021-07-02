@@ -6,9 +6,11 @@ object Dependencies {
   lazy val circeCore = "io.circe" %% "circe-core" % "0.14.1"
   lazy val circeGeneric = "io.circe" %% "circe-generic" % "0.14.1"
   lazy val circeParser = "io.circe" %% "circe-parser" % "0.14.1"
-  lazy val helidonWebserver = "io.helidon.webserver" % "helidon-webserver" % "2.3.1"
-  lazy val helidonMedia = "io.helidon.media" % "helidon-media-jsonb" % "2.3.1"
+  lazy val finatraHttp = ("com.twitter" %% "finatra-http" % "21.2.0").cross(CrossVersion.for3Use2_13)
   lazy val helidonConfig = "io.helidon.config" % "helidon-config-yaml" % "2.3.1"
+  lazy val helidonCors = "io.helidon.webserver" % "helidon-webserver-cors" % "2.3.1"
+  lazy val helidonMedia = "io.helidon.media" % "helidon-media-jsonb" % "2.3.1"
+  lazy val helidonWebserver = "io.helidon.webserver" % "helidon-webserver" % "2.3.1"
   lazy val jackson = "com.fasterxml.jackson.core" % "jackson-databind" % "2.12.3"
   lazy val jacksonTime = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.12.3"
   lazy val javalin = "io.javalin" % "javalin" % "3.13.8"

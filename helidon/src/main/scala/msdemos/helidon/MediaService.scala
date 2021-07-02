@@ -4,9 +4,9 @@ import io.helidon.webserver.Routing
 import io.helidon.webserver.ServerRequest
 import io.helidon.webserver.ServerResponse
 import io.helidon.webserver.Service
-import msdemos.shared.RequestCounts
+import msdemos.shared.{RequestCounts, VideoSequence}
 import msdemos.shared.jdk.RequestCounts as JRequestCounts
-import msdemos.shared.ResponseBuilder.*
+
 import scala.jdk.CollectionConverters.*
 
 class MediaService extends Service {
@@ -23,13 +23,13 @@ class MediaService extends Service {
     val j = req.path.param("j").toInt
     val k = req.path.param("k").toInt
     val rc = RequestCounts(i, j, k)
-    res.send(from(rc).asJava)
+    res.send(VideoSequence.from(rc).asJava)
   }
 
   private def handlePost(req: ServerRequest, res: ServerResponse): Unit =
     req.content
       .as(classOf[JRequestCounts])
-      .thenAccept(body => res.send(from(body.asScala).asJava))
+      .thenAccept(body => res.send(VideoSequence.from(body.asScala).asJava))
   
   
 }

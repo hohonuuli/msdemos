@@ -1,8 +1,10 @@
 package msdemos.shared
 
+import java.net.URI
+import java.time.{Duration, Instant}
 import java.util.UUID
 import scala.beans.BeanProperty
-import scala.jdk.CollectionConverters.*
+import scala.jdk.CollectionConverters._
 
 final case class VideoSequence(@BeanProperty uuid: UUID, 
   @BeanProperty camera: String, 
@@ -11,3 +13,26 @@ final case class VideoSequence(@BeanProperty uuid: UUID,
 
     def getVideos() = videos.asJava
   }
+
+object VideoSequence {
+  def from(rc: RequestCounts): Seq[VideoSequence] = {
+    for {
+      i <- 0 until rc.i
+    } yield {
+
+      val v = for {
+        j <- 0 until rc.j
+      } yield {
+
+        val vr = for {
+          k <- 0 until rc.k
+        } yield VideoReference(UUID.randomUUID(), URI.create(s"http://myserver.com/$i/$j/$k/somemovie.mp4"))
+        Video(UUID.randomUUID, Instant.now, Duration.ofMinutes(i * j), vr)
+
+      }
+
+      VideoSequence(UUID.randomUUID, "Ventana", s"Ventana $i", v)
+
+    }
+  }
+}
