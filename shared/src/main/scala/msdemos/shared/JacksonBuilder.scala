@@ -11,8 +11,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 object JacksonBuilder {
 
   object InstantSerializer extends StdSerializer[Instant](classOf[Instant]) {
-    
-    override def serialize(value: Instant, jgen: JsonGenerator, provider: SerializerProvider): Unit =
+
+    override def serialize(
+        value: Instant,
+        jgen: JsonGenerator,
+        provider: SerializerProvider
+    ): Unit =
       jgen.writeString(value.toString)
 
   }
@@ -21,8 +25,8 @@ object JacksonBuilder {
     val module = new SimpleModule("MsdemosModule")
     module.addSerializer(classOf[Instant], InstantSerializer)
   }
-  
-  def build(): ObjectMapper =  ObjectMapper()
+
+  def build(): ObjectMapper = ObjectMapper()
     .registerModule(JavaTimeModule())
 
 }

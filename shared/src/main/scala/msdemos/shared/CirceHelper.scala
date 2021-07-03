@@ -12,14 +12,14 @@ object CirceHelper {
 
   def buildJsonResponse(body: String): String = {
     decode[RequestCounts](body) match {
-      case Left(e) => throw e
+      case Left(e)   => throw e
       case Right(rc) => buildJsonResponse(rc)
     }
   }
 
   def buildJsonResponse(rc: RequestCounts): String = {
     val videoSequences = VideoSequence.from(rc)
-    val json = videoSequences.asJson
+    val json           = videoSequences.asJson
     printer.print(json)
   }
 

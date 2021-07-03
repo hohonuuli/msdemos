@@ -6,13 +6,15 @@ import java.util.UUID
 import scala.beans.BeanProperty
 import scala.jdk.CollectionConverters._
 
-final case class VideoSequence(@BeanProperty uuid: UUID, 
-  @BeanProperty camera: String, 
-  @BeanProperty deployment: String, 
-  videos: Seq[Video]) {
+final case class VideoSequence(
+    @BeanProperty uuid: UUID,
+    @BeanProperty camera: String,
+    @BeanProperty deployment: String,
+    videos: Seq[Video]
+) {
 
-    def getVideos() = videos.asJava
-  }
+  def getVideos() = videos.asJava
+}
 
 object VideoSequence {
   def from(rc: RequestCounts): Seq[VideoSequence] = {
@@ -26,7 +28,10 @@ object VideoSequence {
 
         val vr = for {
           k <- 0 until rc.k
-        } yield VideoReference(UUID.randomUUID(), URI.create(s"http://myserver.com/$i/$j/$k/somemovie.mp4"))
+        } yield VideoReference(
+          UUID.randomUUID(),
+          URI.create(s"http://myserver.com/$i/$j/$k/somemovie.mp4")
+        )
         Video(UUID.randomUUID, Instant.now, Duration.ofMinutes(i * j), vr)
 
       }

@@ -18,7 +18,10 @@ object Dependencies {
   lazy val jettyServlets = "org.eclipse.jetty" % "jetty-servlets" % "9.4.42.v20210604"
   lazy val jettyWebapp = "org.eclipse.jetty" % "jetty-webapp" % "9.4.42.v20210604"
   lazy val junit = "com.github.sbt" % "junit-interface" % "0.13.2"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.3"
   lazy val scalatra = ("org.scalatra" %% "scalatra" % "2.7.1").cross(CrossVersion.for3Use2_13)
+  lazy val scalatraJson = ("org.scalatra" %% "scalatra-json" % "2.7.1").cross(CrossVersion.for3Use2_13)
+  lazy val json4sJackson = ("org.json4s"   %% "json4s-jackson" % "3.6.11").cross(CrossVersion.for3Use2_13)
   lazy val sparkJava = "com.sparkjava" % "spark-core" % "2.9.3"
   lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC17"
 

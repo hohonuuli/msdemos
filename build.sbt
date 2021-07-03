@@ -73,7 +73,10 @@ lazy val `msdemo-scalatra` = (project in file("scalatra"))
       jettyServlets,
       jettyWebapp,
       junit % "test",
-      scalatra
+//      logback,
+      scalatra,
+      scalatraJson,
+      json4sJackson
     )
   )
 

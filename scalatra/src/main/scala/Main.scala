@@ -16,8 +16,13 @@ object Main {
     httpConfig.setSendDateHeader(true)
     httpConfig.setSendServerVersion(false)
 
-    val connector = new NetworkTrafficServerConnector(server, new HttpConnectionFactory(httpConfig))
-    connector.setPort(8080)
+    val connector = new NetworkTrafficServerConnector(
+      server,
+      new HttpConnectionFactory(httpConfig)
+    )
+    val port = 8080
+    connector.setPort(port)
+    println(s"Starting Scalatra on port $port")
     connector.setIdleTimeout(90000)
     server.addConnector(connector)
 

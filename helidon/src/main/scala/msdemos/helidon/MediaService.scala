@@ -11,7 +11,6 @@ import scala.jdk.CollectionConverters.*
 
 class MediaService extends Service {
 
-
   override def update(rules: Routing.Rules): Unit = {
     rules
       .get("/demo/{i}/{j}/{k}", handleGet)
@@ -19,9 +18,9 @@ class MediaService extends Service {
   }
 
   private def handleGet(req: ServerRequest, res: ServerResponse): Unit = {
-    val i = req.path.param("i").toInt
-    val j = req.path.param("j").toInt
-    val k = req.path.param("k").toInt
+    val i  = req.path.param("i").toInt
+    val j  = req.path.param("j").toInt
+    val k  = req.path.param("k").toInt
     val rc = RequestCounts(i, j, k)
     res.send(VideoSequence.from(rc).asJava)
   }
@@ -30,6 +29,5 @@ class MediaService extends Service {
     req.content
       .as(classOf[JRequestCounts])
       .thenAccept(body => res.send(VideoSequence.from(body.asScala).asJava))
-  
-  
+
 }

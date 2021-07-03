@@ -2,26 +2,21 @@ package msdemos.finatra
 
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.http.annotations.RouteParam
-import msdemos.shared.RequestCounts
+import msdemos.shared.{CirceHelper, RequestCounts}
+
+import scala.reflect.runtime.universe._
 
 class MediaController extends Controller {
 
-  /*
-[error] -- Error: /Users/brian/playspace/webdemos/msdemos/finatra/src/main/scala/msdemos/finatra/MediaController.scala:11:3
-[error] 11 |  }
-[error]    |   ^
-[error]    |   No TypeTag available for msdemos.finatra.FRequestCounts
-[error] -- Error: /Users/brian/playspace/webdemos/msdemos/finatra/src/main/scala/msdemos/finatra/MediaController.scala:15:3
-[error] 15 |  }
-[error]    |   ^
-[error]    |   No TypeTag available for msdemos.shared.RequestCounts
+  given TypeTag[FRequestCounts] = typeTag[FRequestCounts]
+  given TypeTag[RequestCounts] = typeTag[RequestCounts]
+  given TypeTag[String] = typeTag[String]
 
-   */
-//  get("/media/demo/:i/:j/:k") { (request: FRequestCounts) =>
-//    ""
-//  }
-//
-//  post("/media/demo") { (request: RequestCounts) =>
-//    ""
-//  }
+  get("/media/demo/:i/:j/:k") { (request: FRequestCounts) =>
+    CirceHelper.buildJsonResponse(request.asRequestCount)
+  }
+
+  post("/media/demo") { (request: RequestCounts) =>
+    CirceHelper.buildJsonResponse(request)
+  }
 }
