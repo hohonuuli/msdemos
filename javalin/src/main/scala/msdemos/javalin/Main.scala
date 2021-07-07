@@ -34,6 +34,7 @@ object Main {
     val i  = ctx.pathParam("i").toInt
     val j  = ctx.pathParam("j").toInt
     val k  = ctx.pathParam("k").toInt
+    val delayMillis = ctx.queryParam("delayMillis", "0").toLong
     val rc = RequestCounts(i, j, k)
     ctx.json(VideoSequence.from(rc).asJava)
   }

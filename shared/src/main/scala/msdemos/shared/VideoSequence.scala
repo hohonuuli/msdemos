@@ -18,6 +18,11 @@ final case class VideoSequence(
 
 object VideoSequence {
   def from(rc: RequestCounts): Seq[VideoSequence] = {
+
+    if (rc.delayMillis > 0L) {
+      Thread.sleep(rc.delayMillis)
+    }
+
     for {
       i <- 0 until rc.i
     } yield {

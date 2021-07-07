@@ -11,13 +11,13 @@ import java.util.UUID
 object Main extends cask.MainRoutes {
 
   @cask.get("/media/demo/:i/:j/:k")
-  def handleGet(i: Int, j: Int, k: Int) = handle(i, j, k)
+  def handleGet(i: Int, j: Int, k: Int, delayMillis: Long = 0L) = handle(i, j, k, delayMillis)
 
   @cask.postJson("/media/demo")
-  def handlePost(i: Int, j: Int, k: Int) = handle(i, j, k)
+  def handlePost(i: Int, j: Int, k: Int, delayMillis: Long) = handle(i, j, k, delayMillis)
 
-  private def handle(i: Int, j: Int, k: Int) = {
-    CirceHelper.buildJsonResponse(RequestCounts(i, j, k))
+  private def handle(i: Int, j: Int, k: Int, delayMillis: Long) = {
+    CirceHelper.buildJsonResponse(RequestCounts(i, j, k, delayMillis))
   }
 
   initialize()

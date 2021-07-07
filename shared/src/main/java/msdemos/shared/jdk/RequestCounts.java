@@ -5,6 +5,7 @@ public class RequestCounts {
   private Integer i;
   private Integer j;
   private Integer k;
+  private Long delayMillis = 0L;
 
   public RequestCounts(int i, int j, int k) {
     this.i = i;
@@ -38,8 +39,17 @@ public class RequestCounts {
     this.k = k;
   }
 
+  
+  public Long getDelayMillis() {
+    return delayMillis;
+  }
+
+  public void setDelayMillis(Long delayMillis) {
+    this.delayMillis = delayMillis;
+  }
+
   public msdemos.shared.RequestCounts asScala() {
-    return msdemos.shared.RequestCounts.apply(getI(), getJ(), getK());
+    return msdemos.shared.RequestCounts.apply(getI(), getJ(), getK(), getDelayMillis());
   }
 
   
