@@ -35,12 +35,12 @@ object Main {
     val j  = ctx.pathParam("j").toInt
     val k  = ctx.pathParam("k").toInt
     val rc = RequestCounts(i, j, k)
-    ctx.json(VideoSequence.from(rc).asJava)
+    ctx.json(VideoSequence.fromBlocking(rc).asJava)
   }
 
   private def handlePost(ctx: Context): Unit = {
     val rc = ctx.bodyAsClass(classOf[JRequestCounts]).asScala
-    ctx.json(VideoSequence.from(rc).asJava)
+    ctx.json(VideoSequence.fromBlocking(rc).asJava)
   }
 
 }

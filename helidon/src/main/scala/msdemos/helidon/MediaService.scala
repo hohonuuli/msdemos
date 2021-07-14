@@ -22,12 +22,12 @@ class MediaService extends Service {
     val j  = req.path.param("j").toInt
     val k  = req.path.param("k").toInt
     val rc = RequestCounts(i, j, k)
-    res.send(VideoSequence.from(rc).asJava)
+    res.send(VideoSequence.fromBlocking(rc).asJava)
   }
 
   private def handlePost(req: ServerRequest, res: ServerResponse): Unit =
     req.content
       .as(classOf[JRequestCounts])
-      .thenAccept(body => res.send(VideoSequence.from(body.asScala).asJava))
+      .thenAccept(body => res.send(VideoSequence.fromBlocking(body.asScala).asJava))
 
 }

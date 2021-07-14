@@ -18,7 +18,7 @@ object CirceHelper {
   }
 
   def buildJsonResponse(rc: RequestCounts): String = {
-    val videoSequences = VideoSequence.from(rc)
+    val videoSequences = VideoSequence.fromBlocking(rc)
     val json           = videoSequences.asJson
     printer.print(json)
   }

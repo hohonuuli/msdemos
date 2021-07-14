@@ -17,10 +17,19 @@ final case class VideoSequence(
 }
 
 object VideoSequence {
-  def from(rc: RequestCounts): Seq[VideoSequence] = {
+
+  /**
+   * This method simulates a blocking request. It will put the current thread to sleep for the provided duration before returning a value
+   * @param rc
+   * @param delayMillis
+   * @return
+   */
+  def fromBlocking(rc: RequestCounts, delayMillis: Long = 20L): Seq[VideoSequence] = {
+    Thread.sleep(delayMillis)
     for {
       i <- 0 until rc.i
     } yield {
+      
 
       val v = for {
         j <- 0 until rc.j

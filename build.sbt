@@ -3,7 +3,7 @@ import Dependencies._
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 ThisBuild / organization := "org.mbari"
-ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "3.0.0"
 ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
@@ -20,6 +20,17 @@ lazy val shared = (project in file("shared"))
     )
   )
 
+lazy val `msdemo-akka` = (project in file("akka"))
+  .dependsOn(shared)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    libraryDependencies ++= Seq(
+      akka,
+      akkaHttp,
+      akkaStream,
+      junit % "test"
+    )
+  )
 
 lazy val `msdemo-cask` = (project in file("cask"))
   .dependsOn(shared)
@@ -41,7 +52,7 @@ lazy val `msdemo-finatra` = (project in file("finatra"))
     )
   )
 
-  lazy val `msdemo-helidon` = (project in file("helidon"))
+lazy val `msdemo-helidon` = (project in file("helidon"))
   .dependsOn(shared)
   .enablePlugins(JavaAppPackaging)
   .settings(
@@ -99,4 +110,3 @@ lazy val `msdemo-zhttp` = (project in file("zhttp"))
       zhttp
     )
   )
-
