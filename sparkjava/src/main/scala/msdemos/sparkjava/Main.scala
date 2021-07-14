@@ -16,7 +16,8 @@ object Main {
         val i  = req.params("i").toInt
         val j  = req.params("j").toInt
         val k  = req.params("k").toInt
-        val rc = RequestCounts(i, j, k)
+        val delayMillis = req.queryParamOrDefault("delayMillis", "0").toLong
+        val rc = RequestCounts(i, j, k, delayMillis)
         res.`type`("application/json")
         CirceHelper.buildJsonResponse(rc)
       }

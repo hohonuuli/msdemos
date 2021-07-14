@@ -17,8 +17,12 @@ object Main extends App {
 
   val app = Http.collect {
 
-    case Method.GET -> Root / "media" / "demo" / i / j / k =>
-      val rc = RequestCounts(i.toInt, j.toInt, k.toInt)
+    case req @ Method.GET -> Root / "media" / "demo" / i / j / k =>
+      val delayMillis = req.url
+        .queryParams
+        .get("delayMillis")
+        .map(_.headOption.map(_.toLong).getOrElse(0L))
+      val rc = RequestCounts(i.toInt, j.toInt, k.toInt, delayMillis)
       Response.jsonString(CirceHelper.buildJsonResponse(rc))
 
     case req @ Method.POST -> Root / "media" / "demo" =>

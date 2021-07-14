@@ -8,6 +8,7 @@ import msdemos.shared.{RequestCounts, VideoSequence}
 import msdemos.shared.jdk.RequestCounts as JRequestCounts
 
 import scala.jdk.CollectionConverters.*
+import scala.jdk.OptionConverters.*
 
 class MediaService extends Service {
 
@@ -21,7 +22,12 @@ class MediaService extends Service {
     val i  = req.path.param("i").toInt
     val j  = req.path.param("j").toInt
     val k  = req.path.param("k").toInt
-    val rc = RequestCounts(i, j, k)
+    val delayMillis = req.queryParams
+      .first("delayMillis")
+      .toScala
+      .map(_.toLong)
+      .getOrElse(0L)
+    val rc = RequestCounts(i, j, k, delayMillis)
     res.send(VideoSequence.fromBlocking(rc).asJava)
   }
 

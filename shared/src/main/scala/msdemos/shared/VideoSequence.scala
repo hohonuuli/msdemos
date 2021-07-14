@@ -10,8 +10,7 @@ final case class VideoSequence(
     @BeanProperty uuid: UUID,
     @BeanProperty camera: String,
     @BeanProperty deployment: String,
-    videos: Seq[Video]
-) {
+    videos: Seq[Video]) {
 
   def getVideos() = videos.asJava
 }
@@ -25,7 +24,12 @@ object VideoSequence {
    * @return
    */
   def fromBlocking(rc: RequestCounts, delayMillis: Long = 20L): Seq[VideoSequence] = {
-    Thread.sleep(delayMillis)
+
+    if (rc.delayMillis > 0L) {
+      Thread.sleep(rc.delayMillis)
+    }
+
+
     for {
       i <- 0 until rc.i
     } yield {
