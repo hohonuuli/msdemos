@@ -8,6 +8,7 @@ import msdemos.shared.Video
 import java.net.URI
 import java.util.UUID
 import cask.model.Request
+import cask.model.Response
 
 
 /**
@@ -15,8 +16,6 @@ import cask.model.Request
  * 
  * Notes:
  *  - Very simple
- *  - As far as I can tell you can either use path params or handle the raw request. 
- *    This is a pain as you need the raw request in order to set the response headers.
  *  - No CORS support out of the box
  */
 object Main extends cask.MainRoutes {
@@ -29,7 +28,11 @@ object Main extends cask.MainRoutes {
   def handlePost(i: Int, j: Int, k: Int, delayMillis: Long) = handle(i, j, k, delayMillis)
 
   private def handle(i: Int, j: Int, k: Int, delayMillis: Long) = {
-    CirceHelper.buildJsonResponse(RequestCounts(i, j, k, delayMillis))
+    Response(
+      CirceHelper.buildJsonResponse(RequestCounts(i, j, k, delayMillis)),
+      headers = Seq("Content-Type" -> "application/json",
+                    "Access-Control-Allow-Origin" -> "*")
+    )
   }
 
   initialize()
