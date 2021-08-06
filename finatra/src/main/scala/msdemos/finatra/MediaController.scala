@@ -9,8 +9,8 @@ import scala.reflect.runtime.universe._
 class MediaController extends Controller {
 
   given TypeTag[FRequestCounts] = typeTag[FRequestCounts]
-  given TypeTag[RequestCounts] = typeTag[RequestCounts]
-  given TypeTag[String] = typeTag[String]
+  given TypeTag[RequestCounts]  = typeTag[RequestCounts]
+  given TypeTag[String]         = typeTag[String]
 
   get("/media/demo/:i/:j/:k") { (request: FRequestCounts) =>
     CirceHelper.buildJsonResponse(request.asRequestCount)

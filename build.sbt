@@ -65,6 +65,19 @@ lazy val `msdemo-helidon` = (project in file("helidon"))
     )
   )
 
+lazy val `msdemos-http4s` = (project in file("http4s"))
+  .dependsOn(shared)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    libraryDependencies ++= Seq(
+      http4sCirce,
+      http4sCore,
+      http4sDsl,
+      http4sEmberServer,
+      junit % "test"
+    )
+  )
+
 lazy val `msdemo-javalin` = (project in file("javalin"))
   .dependsOn(shared)
   .enablePlugins(JavaAppPackaging)

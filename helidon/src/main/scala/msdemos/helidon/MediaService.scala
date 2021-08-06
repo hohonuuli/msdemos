@@ -19,9 +19,9 @@ class MediaService extends Service {
   }
 
   private def handleGet(req: ServerRequest, res: ServerResponse): Unit = {
-    val i  = req.path.param("i").toInt
-    val j  = req.path.param("j").toInt
-    val k  = req.path.param("k").toInt
+    val i = req.path.param("i").toInt
+    val j = req.path.param("j").toInt
+    val k = req.path.param("k").toInt
     val delayMillis = req.queryParams
       .first("delayMillis")
       .toScala

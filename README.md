@@ -2,6 +2,12 @@
 
 Microservice demos in Scala. For performance comparison of HTTP + JSON using a frameworks idiomatic style in Scala.
 
+Framework requirements:
+
+- Enable CORS
+- Non-blocking
+
+
 ## Test cases:
 
 - GET /text - Returns the string "Hello World".

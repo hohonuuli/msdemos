@@ -13,11 +13,11 @@ object Main {
     get(
       "/media/demo/:i/:j/:k",
       (req, res) => {
-        val i  = req.params("i").toInt
-        val j  = req.params("j").toInt
-        val k  = req.params("k").toInt
+        val i           = req.params("i").toInt
+        val j           = req.params("j").toInt
+        val k           = req.params("k").toInt
         val delayMillis = req.queryParamOrDefault("delayMillis", "0").toLong
-        val rc = RequestCounts(i, j, k, delayMillis)
+        val rc          = RequestCounts(i, j, k, delayMillis)
         res.`type`("application/json")
         CirceHelper.buildJsonResponse(rc)
       }

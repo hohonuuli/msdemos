@@ -1,11 +1,6 @@
 package msdemos.zhttp
 
-import msdemos.shared.{
-  CirceHelper,
-  RequestCounts,
-  ResponseBuilder,
-  VideoSequence
-}
+import msdemos.shared.{CirceHelper, RequestCounts, ResponseBuilder, VideoSequence}
 import zhttp.http.*
 import zhttp.service.*
 import zhttp.service.server.ServerChannelFactory
@@ -18,10 +13,10 @@ object Main extends App {
   val app = Http.collect {
 
     case req @ Method.GET -> Root / "media" / "demo" / i / j / k =>
-      val delayMillis = req.url
-        .queryParams
+      val delayMillis = req.url.queryParams
         .get("delayMillis")
         .map(_.headOption.map(_.toLong).getOrElse(0L))
+        .getOrElse(0L)
       val rc = RequestCounts(i.toInt, j.toInt, k.toInt, delayMillis)
       Response.jsonString(CirceHelper.buildJsonResponse(rc))
 
@@ -35,9 +30,8 @@ object Main extends App {
 
   private val port = 8080
   private val server =
-    Server.port(port) ++  // Setup port
-    Server.app(CORS(app))       // Setup the Http app
-
+    Server.port(port) ++    // Setup port
+      Server.app(CORS(app)) // Setup the Http app
 
   override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] = {
     // Barebones server had 25% error response in testing
