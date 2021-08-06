@@ -6,6 +6,17 @@ import zhttp.service.*
 import zhttp.service.server.ServerChannelFactory
 import zio.*
 
+/**
+ * zio http
+ * 
+ * Notes:
+ *  - Generally very simple to get going. The quagmire that is understanding ZIO 
+ *    is lurking though.
+ *  - Really fast
+ *  - Seems to throw lots of exceptions on requests when it first starts up.
+ *  - Note clear on how to handle errors. Exceptions thrown on the server are not propagated 
+ *    to the response/client. (i.e. no response is sent)
+ */
 object Main extends App {
 
   // -- App DSL

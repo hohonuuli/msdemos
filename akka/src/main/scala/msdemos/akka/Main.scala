@@ -13,6 +13,19 @@ import msdemos.shared.VideoSequence
 import msdemos.shared.CirceHelper
 import akka.actor.typed.DispatcherSelector
 
+import akka.http.scaladsl.server.directives.DebuggingDirectives
+import akka.event.Logging
+
+/**
+ * Akka HTTP
+ * 
+ * Notes:
+ *  - The routing DSL is a stinky pile of turds.
+ *  - No idea how to extract mutltiple path params from a route.
+ *  - Currently post works but get doesn't.
+ *  - Official docs use deprecated methods for setting up server. Had to look at source code 
+ *    to to get custom methods.
+ */
 object Main {
 
   def main(args: Array[String]): Unit = {
@@ -20,38 +33,40 @@ object Main {
     given ExecutionContext         = system.dispatchers.lookup(DispatcherSelector.blocking)
 
     val route =
-      path("media") {
-        path("demo") {
-          concat(
+      pathPrefix("media" / "demo") {
+        concat(
+          get {
             path(IntNumber) { i =>
               path(IntNumber) { j =>
                 path(IntNumber) { k =>
                   parameters("delayMillis".optional) { opt =>
-                    get {
-                      val delayMillis = opt.map(_.toLong).getOrElse(0L)
-                      val rc          = RequestCounts(i, j, k, delayMillis)
-                      val json        = CirceHelper.buildJsonResponse(rc)
-                      val resp        = HttpEntity(ContentTypes.`application/json`, json)
-                      complete(resp)
-                    }
+                    val delayMillis = opt.map(_.toLong).getOrElse(0L)
+                    val rc          = RequestCounts(i, j, k, delayMillis)
+                    val json        = CirceHelper.buildJsonResponse(rc)
+                    val resp        = HttpEntity(ContentTypes.`application/json`, json)
+                    complete(resp)
                   }
                 }
               }
-            },
-            post {
-              entity(as[String]) { body =>
-                val json = CirceHelper.buildJsonResponse(body)
-                val resp = HttpEntity(ContentTypes.`application/json`, json)
-                complete(resp)
-              }
             }
-          )
-        }
+          },
+          post {
+            entity(as[String]) { body =>
+              val json = CirceHelper.buildJsonResponse(body)
+              val resp = HttpEntity(ContentTypes.`application/json`, json)
+              complete(resp)
+            }
+          }
+        )
       }
+
+    // val routeLogged = DebuggingDirectives.logRequestResult("Client ReST", Logging.InfoLevel)(route)
+
 
     val bindingFuture = Http()
       .newServerAt("localhost", 8080)
       .bindFlow(route)
+      // .bindFlow(routeLogged)
     println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
     bindingFuture

@@ -3,6 +3,12 @@ package msdemos.sparkjava
 import spark.Spark.*
 import msdemos.shared.{CirceHelper, RequestCounts, ResponseBuilder}
 
+/**
+ * Sparkjava
+ * 
+ * Notes:
+ *  - Wow. this is really simple.  Up and running in a few minutes.
+ */
 object Main {
   def main(args: Array[String]): Unit = {
 

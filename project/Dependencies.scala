@@ -51,6 +51,8 @@ object Dependencies {
 
   lazy val sparkJava = "com.sparkjava" % "spark-core" % "2.9.3"
 
+  lazy val vertxWeb = "io.vertx" % "vertx-web" % "4.1.2"
+
   lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC17"
 
 }

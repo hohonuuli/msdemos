@@ -28,7 +28,8 @@ lazy val `msdemo-akka` = (project in file("akka"))
       akka,
       akkaHttp,
       akkaStream,
-      junit % "test"
+      junit % "test",
+      logback
     )
   )
 
@@ -111,6 +112,16 @@ lazy val `msdemo-sparkjava` = (project in file("sparkjava"))
     libraryDependencies ++= Seq(
       junit % "test",
       sparkJava
+    )
+  )
+
+lazy val `msdemo-vertx` = (project in file("vertx"))
+  .dependsOn(shared)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    libraryDependencies ++= Seq(
+      junit % "test",
+      vertxWeb
     )
   )
 

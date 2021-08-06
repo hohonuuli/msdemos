@@ -11,6 +11,15 @@ import _root_.io.javalin.core.validation.JavalinValidation
 import java.time.Instant
 import _root_.io.javalin.plugin.json.JavalinJackson
 
+/**
+ * Javalin
+ * 
+ * Notes: 
+ *  - Java framework
+ *  - Uses Jackson for object serialization. Works relatively well with case
+ *    classes, but be sure all collections return Java collections and 
+ *    there's a getter that returns a java collections
+ */
 object Main {
 
   def main(args: Array[String]): Unit = {
