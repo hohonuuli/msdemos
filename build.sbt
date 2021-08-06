@@ -65,7 +65,7 @@ lazy val `msdemo-helidon` = (project in file("helidon"))
     )
   )
 
-lazy val `msdemos-http4s` = (project in file("http4s"))
+lazy val `msdemo-http4s` = (project in file("http4s"))
   .dependsOn(shared)
   .enablePlugins(JavaAppPackaging)
   .settings(

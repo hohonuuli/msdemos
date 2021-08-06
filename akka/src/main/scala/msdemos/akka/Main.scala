@@ -23,9 +23,9 @@ object Main {
       path("media") {
         path("demo") {
           concat(
-            pathPrefix(IntNumber) { i =>
-              pathPrefix(IntNumber) { j =>
-                pathPrefix(IntNumber) { k =>
+            path(IntNumber) { i =>
+              path(IntNumber) { j =>
+                path(IntNumber) { k =>
                   parameters("delayMillis".optional) { opt =>
                     get {
                       val delayMillis = opt.map(_.toLong).getOrElse(0L)
