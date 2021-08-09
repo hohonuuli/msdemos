@@ -33,13 +33,12 @@ object Main extends IOApp {
 
   given ExecutionContext = ExecutionContext.fromExecutorService(CustomExecutors.newForkJoinPool())
 
-  object DelayMillisQueryParamMatcher extends OptionalQueryParamDecoderMatcher[Long]("delayMillis")
+  object ReadCountQueryParamMatcher extends OptionalQueryParamDecoderMatcher[Int]("readCount")
 
   val mediaService = HttpRoutes
     .of[IO] {
-      case req @ GET -> Root / "media" / "demo" / i / j / k :? DelayMillisQueryParamMatcher(opt) =>
-        val delayMillis = opt.getOrElse(0L)
-        val rc          = RequestCounts(i.toInt, j.toInt, k.toInt, delayMillis)
+      case req @ GET -> Root / "media" / "demo" / i / j / k :? ReadCountQueryParamMatcher(readCount) =>
+        val rc          = RequestCounts(i.toInt, j.toInt, k.toInt, readCount)
         val media       = VideoSequence.fromBlocking(rc)
         Ok(media)
       case req @ POST -> Root / "media" / "demo" =>

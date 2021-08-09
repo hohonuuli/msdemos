@@ -39,9 +39,9 @@ object Main {
             path(IntNumber) { i =>
               path(IntNumber) { j =>
                 path(IntNumber) { k =>
-                  parameters("delayMillis".optional) { opt =>
-                    val delayMillis = opt.map(_.toLong).getOrElse(0L)
-                    val rc          = RequestCounts(i, j, k, delayMillis)
+                  parameters("readCount".optional) { opt =>
+                    val readCount = opt.map(_.toInt)
+                    val rc          = RequestCounts(i, j, k, readCount)
                     val json        = CirceHelper.buildJsonResponse(rc)
                     val resp        = HttpEntity(ContentTypes.`application/json`, json)
                     complete(resp)

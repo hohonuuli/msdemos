@@ -24,11 +24,11 @@ object Main extends App {
   val app = Http.collect {
 
     case req @ Method.GET -> Root / "media" / "demo" / i / j / k =>
-      val delayMillis = req.url.queryParams
-        .get("delayMillis")
-        .map(_.headOption.map(_.toLong).getOrElse(0L))
-        .getOrElse(0L)
-      val rc = RequestCounts(i.toInt, j.toInt, k.toInt, delayMillis)
+      val readCount = req.url.queryParams
+        .get("readCount")
+        .map(_.headOption.map(_.toInt))
+        .getOrElse(None)
+      val rc = RequestCounts(i.toInt, j.toInt, k.toInt, readCount)
       Response.jsonString(CirceHelper.buildJsonResponse(rc))
 
     case req @ Method.POST -> Root / "media" / "demo" =>

@@ -6,5 +6,7 @@ final case class RequestCounts(
     @BeanProperty i: Int,
     @BeanProperty j: Int,
     @BeanProperty k: Int,
-    @BeanProperty delayMillis: Long = 0L
-)
+    readCount: Option[Int] = None
+) {
+    def getReadCount: Int = readCount.getOrElse(0)
+}

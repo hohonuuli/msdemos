@@ -38,8 +38,8 @@ object Main {
     val i           = ctx.pathParam("i").toInt
     val j           = ctx.pathParam("j").toInt
     val k           = ctx.pathParam("k").toInt
-    val delayMillis = ctx.queryParam("delayMillis", "0").toLong
-    val rc          = RequestCounts(i, j, k)
+    val readCount = ctx.queryParam("readCount", "0").toInt
+    val rc          = RequestCounts(i, j, k, Option(readCount))
     ctx.json(VideoSequence.fromBlocking(rc).asJava)
   }
 

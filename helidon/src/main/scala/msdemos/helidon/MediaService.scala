@@ -22,12 +22,11 @@ class MediaService extends Service {
     val i = req.path.param("i").toInt
     val j = req.path.param("j").toInt
     val k = req.path.param("k").toInt
-    val delayMillis = req.queryParams
-      .first("delayMillis")
+    val readCount = req.queryParams
+      .first("readCount")
       .toScala
-      .map(_.toLong)
-      .getOrElse(0L)
-    val rc = RequestCounts(i, j, k, delayMillis)
+      .map(_.toInt)
+    val rc = RequestCounts(i, j, k, readCount)
     res.send(VideoSequence.fromBlocking(rc).asJava)
   }
 

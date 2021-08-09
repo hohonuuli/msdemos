@@ -22,14 +22,14 @@ object Main extends cask.MainRoutes {
 
 
   @cask.get("/media/demo/:i/:j/:k")
-  def handleGet(i: Int, j: Int, k: Int, delayMillis: Long = 0L) = handle(i, j, k, delayMillis)
+  def handleGet(i: Int, j: Int, k: Int, readCount: Int = 0) = handle(i, j, k, readCount)
 
   @cask.postJson("/media/demo")
-  def handlePost(i: Int, j: Int, k: Int, delayMillis: Long) = handle(i, j, k, delayMillis)
+  def handlePost(i: Int, j: Int, k: Int, readCount: Int = 0) = handle(i, j, k, readCount)
 
-  private def handle(i: Int, j: Int, k: Int, delayMillis: Long) = {
+  private def handle(i: Int, j: Int, k: Int, readCount: Int) = {
     Response(
-      CirceHelper.buildJsonResponse(RequestCounts(i, j, k, delayMillis)),
+      CirceHelper.buildJsonResponse(RequestCounts(i, j, k, Option(readCount))),
       headers = Seq("Content-Type" -> "application/json",
                     "Access-Control-Allow-Origin" -> "*")
     )

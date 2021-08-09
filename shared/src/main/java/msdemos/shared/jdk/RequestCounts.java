@@ -1,11 +1,13 @@
 package msdemos.shared.jdk;
 
+
+
 public class RequestCounts {
 
   private Integer i;
   private Integer j;
   private Integer k;
-  private Long delayMillis = 0L;
+  private int readCount = 0;
 
   public RequestCounts(int i, int j, int k) {
     this.i = i;
@@ -40,16 +42,16 @@ public class RequestCounts {
   }
 
   
-  public Long getDelayMillis() {
-    return delayMillis;
+  public int getReadCount() {
+    return readCount;
   }
 
-  public void setDelayMillis(Long delayMillis) {
-    this.delayMillis = delayMillis;
+  public void setReadCount(int readCount) {
+    this.readCount = readCount;
   }
 
   public msdemos.shared.RequestCounts asScala() {
-    return msdemos.shared.RequestCounts.apply(getI(), getJ(), getK(), getDelayMillis());
+    return msdemos.shared.RequestCounts.apply(i, j, k, scala.Option.apply(readCount));
   }
 
   

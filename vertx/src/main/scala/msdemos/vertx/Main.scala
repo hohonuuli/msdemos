@@ -61,15 +61,14 @@ object Main {
     val k = ctx.pathParam("k").toInt;
 
     // get query params
-    val delayMillis = ctx.queryParam("delayMillis")
+    val readCount = ctx.queryParam("readCouunt")
       .asScala
-      .map(_.toLong)
+      .map(_.toInt)
       .headOption
-      .getOrElse(0L)
 
     // build response (may block if delayMillis > 0)/. We are not using 
     // vertx's built in JSON handling because I'm lazy.
-    val rc = RequestCounts(i, j, k, delayMillis)
+    val rc = RequestCounts(i, j, k, readCount)
     val json = CirceHelper.buildJsonResponse(rc)
 
     //  Our json object is a string, but we make it look like JSON in 

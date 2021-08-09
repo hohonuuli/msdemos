@@ -13,7 +13,7 @@ object Dependencies {
   lazy val circeGeneric    = "io.circe" %% "circe-generic" % circeVersion
   lazy val circeParser     = "io.circe" %% "circe-parser"  % circeVersion
 
-  lazy val finatraHttp = ("com.twitter" %% "finatra-http" % "21.2.0").cross(CrossVersion.for3Use2_13)
+  lazy val finatraHttp = ("com.twitter" %% "finatra-http-server" % "21.6.0").cross(CrossVersion.for3Use2_13)
 
   private val helidonVersion = "2.3.2"
   lazy val helidonConfig     = "io.helidon.config"    % "helidon-config-yaml"    % helidonVersion

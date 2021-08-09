@@ -5,6 +5,7 @@ import java.time.{Duration, Instant}
 import java.util.UUID
 import scala.beans.BeanProperty
 import scala.jdk.CollectionConverters._
+import scala.io.Source
 
 final case class VideoSequence(
     @BeanProperty uuid: UUID,
@@ -18,6 +19,8 @@ final case class VideoSequence(
 
 object VideoSequence {
 
+  val url = getClass.getResource("/onehundredchars.txt")
+
   /** This method simulates a blocking request. It will put the current thread to sleep for the provided duration before
     * returning a value
     * @param rc
@@ -26,8 +29,11 @@ object VideoSequence {
     */
   def fromBlocking(rc: RequestCounts): Seq[VideoSequence] = {
 
-    if (rc.delayMillis > 0L) {
-      Thread.sleep(rc.delayMillis)
+    for (i <- 0 until rc.readCount.getOrElse(0)) {
+      val source = Source.fromURL(url)
+      val chars = source.getLines.mkString("\n")
+      source.close()
+      assert(chars.length == 100)
     }
 
     for {
