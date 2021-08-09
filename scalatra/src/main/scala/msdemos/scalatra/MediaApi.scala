@@ -21,11 +21,11 @@ class MediaApi(executionContext: ExecutionContext) extends ScalatraServlet with 
   }
 
   get("/:i/:j/:k") {
-    val i           = params.getAs[Int]("i").get
-    val j           = params.getAs[Int]("j").get
-    val k           = params.getAs[Int]("k").get
-    val readCount   = params.getAs[Int]("readCount")
-    val rc          = RequestCounts(i, j, k, readCount)
+    val i         = params.getAs[Int]("i").get
+    val j         = params.getAs[Int]("j").get
+    val k         = params.getAs[Int]("k").get
+    val readCount = params.getAs[Int]("readCount")
+    val rc        = RequestCounts(i, j, k, readCount)
     Future(CirceHelper.buildJsonResponse(rc))
   }
 

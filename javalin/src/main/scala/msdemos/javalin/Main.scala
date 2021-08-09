@@ -11,15 +11,13 @@ import _root_.io.javalin.core.validation.JavalinValidation
 import java.time.Instant
 import _root_.io.javalin.plugin.json.JavalinJackson
 
-/**
- * Javalin
- * 
- * Notes: 
- *  - Java framework
- *  - Uses Jackson for object serialization. Works relatively well with case
- *    classes, but be sure all collections return Java collections and 
- *    there's a getter that returns a java collections
- */
+/** Javalin
+  *
+  * Notes:
+  *   - Java framework
+  *   - Uses Jackson for object serialization. Works relatively well with case classes, but be sure all collections
+  *     return Java collections and there's a getter that returns a java collections
+  */
 object Main {
 
   def main(args: Array[String]): Unit = {
@@ -35,11 +33,11 @@ object Main {
   }
 
   private def handleGet(ctx: Context): Unit = {
-    val i           = ctx.pathParam("i").toInt
-    val j           = ctx.pathParam("j").toInt
-    val k           = ctx.pathParam("k").toInt
+    val i         = ctx.pathParam("i").toInt
+    val j         = ctx.pathParam("j").toInt
+    val k         = ctx.pathParam("k").toInt
     val readCount = ctx.queryParam("readCount", "0").toInt
-    val rc          = RequestCounts(i, j, k, Option(readCount))
+    val rc        = RequestCounts(i, j, k, Option(readCount))
     ctx.json(VideoSequence.fromBlocking(rc).asJava)
   }
 

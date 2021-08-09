@@ -16,43 +16,44 @@ import scala.util.Try
 import scala.util.Success
 import scala.util.Failure
 
-/**
- * Vertx 
- * 
- * Notes:
- *  - Vertx has JSON support built in, I think it's a thin wrapper around Jackson. I fell
- *    back to using circe to avoid writing my own JSON serializer.
- *  - Docs are pretty good. I ran into a few nits. e.g. don't call ctx.next() if you've used ctx.end())
- *  - Blocking calls need to be made via `blockingHandeler` to move the offiending block
- *    off of the event loop.
- */
+/** Vertx
+  *
+  * Notes:
+  *   - Vertx has JSON support built in, I think it's a thin wrapper around Jackson. I fell back to using circe to avoid
+  *     writing my own JSON serializer.
+  *   - Docs are pretty good. I ran into a few nits. e.g. don't call ctx.next() if you've used ctx.end())
+  *   - Blocking calls need to be made via `blockingHandeler` to move the offiending block off of the event loop.
+  */
 object Main {
   def main(args: Array[String]): Unit = {
-    val vertx = Vertx.vertx();
+    val vertx  = Vertx.vertx();
     val router = Router.router(vertx);
 
     // router.route(HttpMethod.GET, "/media/demo/:i/:j/:k")
-    router.get("/media/demo/:i/:j/:k")
+    router
+      .get("/media/demo/:i/:j/:k")
       .handler(CorsHandler.create) // Add CORS access for "*"
       .blockingHandler(ctx => handleGet(ctx))
-      /** Docs say to call ctx.next() in block handler, but it throws an exception */
 
-    router.post("/media/demo")
+    /** Docs say to call ctx.next() in block handler, but it throws an exception */
+
+    router
+      .post("/media/demo")
       .handler(CorsHandler.create) // Add CORS access for "*"
       .handler(BodyHandler.create) // Required to access the body
       .blockingHandler(ctx => handlePost(ctx))
 
-    val server = vertx.createHttpServer()
+    val server = vertx
+      .createHttpServer()
       .requestHandler(router)
       .listen(8080)
       .onSuccess(s => println(s"Vertx web server started on port ${s.actualPort}"))
   }
 
-  
-  /**
-   * Handle a GET request. Parses path and query params.
-   * @param ctx The vertx routing context
-   */
+  /** Handle a GET request. Parses path and query params.
+    * @param ctx
+    *   The vertx routing context
+    */
   def handleGet(ctx: RoutingContext): Unit = {
 
     // get path params
@@ -61,32 +62,35 @@ object Main {
     val k = ctx.pathParam("k").toInt;
 
     // get query params
-    val readCount = ctx.queryParam("readCouunt")
+    val readCount = ctx
+      .queryParam("readCouunt")
       .asScala
       .map(_.toInt)
       .headOption
 
-    // build response (may block if delayMillis > 0)/. We are not using 
+    // build response (may block if delayMillis > 0)/. We are not using
     // vertx's built in JSON handling because I'm lazy.
-    val rc = RequestCounts(i, j, k, readCount)
+    val rc   = RequestCounts(i, j, k, readCount)
     val json = CirceHelper.buildJsonResponse(rc)
 
-    //  Our json object is a string, but we make it look like JSON in 
+    //  Our json object is a string, but we make it look like JSON in
     // the response.
-    ctx.response()
-     .putHeader("Content-Type", "application/json")
-     .setStatusCode(200)
-     .end(json)
+    ctx
+      .response()
+      .putHeader("Content-Type", "application/json")
+      .setStatusCode(200)
+      .end(json)
   }
 
-  /**
-   * Handle a POST request. Parses the body and returns a video sequence. 
-   * @param ctx The vertx routing context
-   */
+  /** Handle a POST request. Parses the body and returns a video sequence.
+    * @param ctx
+    *   The vertx routing context
+    */
   def handlePost(ctx: RoutingContext): Unit = {
     val body = ctx.getBodyAsString()
     val json = CirceHelper.buildJsonResponse(body)
-    ctx.response()
+    ctx
+      .response()
       .putHeader("Content-Type", "application/json")
       .setStatusCode(200)
       .end(json)

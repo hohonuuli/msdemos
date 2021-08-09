@@ -7,22 +7,17 @@ import org.scalatra.servlet.ScalatraListener
 import java.util.ArrayList
 import java.{util => ju}
 
-
-/**
- * Scalatra 
- * 
- * Notes:
- *  - Meant to run in a servlet container like Tomcat or Jetty
- *  - I'm running it via embedded jetty, so this class is mostly jetty 
- *    boilerplate. This setup requires a web.xml file to be present in the
- *    resources/WEB-INF directory.
- *  - Scalatra initialization code is always put in `ScalatraBootstrap.scala`
- *    which needs to be in the root of your src/scala directory (i.e. not in a package)
- *  - Attempted to use json4s support that's built in to Scalatra. That caused the service to fail. 
- *    No error was reported in the logs. I fell back to avoiding scalatra's built in
- *    JSON support and using circe instead.
- * 
- */
+/** Scalatra
+  *
+  * Notes:
+  *   - Meant to run in a servlet container like Tomcat or Jetty
+  *   - I'm running it via embedded jetty, so this class is mostly jetty boilerplate. This setup requires a web.xml file
+  *     to be present in the resources/WEB-INF directory.
+  *   - Scalatra initialization code is always put in `ScalatraBootstrap.scala` which needs to be in the root of your
+  *     src/scala directory (i.e. not in a package)
+  *   - Attempted to use json4s support that's built in to Scalatra. That caused the service to fail. No error was
+  *     reported in the logs. I fell back to avoiding scalatra's built in JSON support and using circe instead.
+  */
 object Main {
   def main(args: Array[String]): Unit = {
     val server: Server = new Server

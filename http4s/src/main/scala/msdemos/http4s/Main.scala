@@ -16,19 +16,16 @@ import msdemos.shared.CirceCodecs.{given}
 import com.comcast.ip4s.Port
 import org.http4s.server.middleware.CORS
 
-
-/**
- * http4s
- * 
- * Notes:
- *  - I'm running on ember server and not blaze. Forums say ember is the future,
- *    but the docs don't have any examples using it so I had to dig into it's 
- *    source code.
- *  - parsing out query parameters is a huge pain in the ass. Requiring 
- *    explicit matchers/decoders to be written for every parameter.
- *  - Being functional there's a lot of F[_] stuff. All examples use cats IO as the F.
- *  - I do not love cats IO.
- */
+/** http4s
+  *
+  * Notes:
+  *   - I'm running on ember server and not blaze. Forums say ember is the future, but the docs don't have any examples
+  *     using it so I had to dig into it's source code.
+  *   - parsing out query parameters is a huge pain in the ass. Requiring explicit matchers/decoders to be written for
+  *     every parameter.
+  *   - Being functional there's a lot of F[_] stuff. All examples use cats IO as the F.
+  *   - I do not love cats IO.
+  */
 object Main extends IOApp {
 
   given ExecutionContext = ExecutionContext.fromExecutorService(CustomExecutors.newForkJoinPool())
@@ -38,8 +35,8 @@ object Main extends IOApp {
   val mediaService = HttpRoutes
     .of[IO] {
       case req @ GET -> Root / "media" / "demo" / i / j / k :? ReadCountQueryParamMatcher(readCount) =>
-        val rc          = RequestCounts(i.toInt, j.toInt, k.toInt, readCount)
-        val media       = VideoSequence.fromBlocking(rc)
+        val rc    = RequestCounts(i.toInt, j.toInt, k.toInt, readCount)
+        val media = VideoSequence.fromBlocking(rc)
         Ok(media)
       case req @ POST -> Root / "media" / "demo" =>
         for {

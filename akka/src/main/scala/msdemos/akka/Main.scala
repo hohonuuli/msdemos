@@ -16,16 +16,14 @@ import akka.actor.typed.DispatcherSelector
 import akka.http.scaladsl.server.directives.DebuggingDirectives
 import akka.event.Logging
 
-/**
- * Akka HTTP
- * 
- * Notes:
- *  - The routing DSL is a stinky pile of turds.
- *  - No idea how to extract mutltiple path params from a route.
- *  - Currently post works but get doesn't.
- *  - Official docs use deprecated methods for setting up server. Had to look at source code 
- *    to to get custom methods.
- */
+/** Akka HTTP
+  *
+  * Notes:
+  *   - The routing DSL is a stinky pile of turds.
+  *   - No idea how to extract mutltiple path params from a route.
+  *   - Currently post works but get doesn't.
+  *   - Official docs use deprecated methods for setting up server. Had to look at source code to to get custom methods.
+  */
 object Main {
 
   def main(args: Array[String]): Unit = {
@@ -41,9 +39,9 @@ object Main {
                 path(IntNumber) { k =>
                   parameters("readCount".optional) { opt =>
                     val readCount = opt.map(_.toInt)
-                    val rc          = RequestCounts(i, j, k, readCount)
-                    val json        = CirceHelper.buildJsonResponse(rc)
-                    val resp        = HttpEntity(ContentTypes.`application/json`, json)
+                    val rc        = RequestCounts(i, j, k, readCount)
+                    val json      = CirceHelper.buildJsonResponse(rc)
+                    val resp      = HttpEntity(ContentTypes.`application/json`, json)
                     complete(resp)
                   }
                 }
@@ -62,11 +60,10 @@ object Main {
 
     // val routeLogged = DebuggingDirectives.logRequestResult("Client ReST", Logging.InfoLevel)(route)
 
-
     val bindingFuture = Http()
       .newServerAt("localhost", 8080)
       .bindFlow(route)
-      // .bindFlow(routeLogged)
+    // .bindFlow(routeLogged)
     println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
     bindingFuture

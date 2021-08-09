@@ -9,7 +9,6 @@ import CirceCodecs.{given}
 
 class RequestCountsTest {
 
-
   @Test
   def testFromJsonMin(): Unit = {
     val json = """{
@@ -19,8 +18,8 @@ class RequestCountsTest {
       |}
       """.stripMargin
     decode[RequestCounts](json) match {
-      case Left(e)   => fail("Failed to parse JSON: " + e.getMessage)
-      case Right(rc) => 
+      case Left(e) => fail("Failed to parse JSON: " + e.getMessage)
+      case Right(rc) =>
         assertEquals(1, rc.i)
         assertEquals(2, rc.j)
         assertEquals(3, rc.k)
@@ -38,8 +37,8 @@ class RequestCountsTest {
       |}
       """.stripMargin
     decode[RequestCounts](json) match {
-      case Left(e)   => fail("Failed to parse JSON: " + e.getMessage)
-      case Right(rc) => 
+      case Left(e) => fail("Failed to parse JSON: " + e.getMessage)
+      case Right(rc) =>
         assertEquals(1, rc.i)
         assertEquals(2, rc.j)
         assertEquals(3, rc.k)

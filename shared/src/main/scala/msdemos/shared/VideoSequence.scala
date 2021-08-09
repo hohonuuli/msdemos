@@ -31,7 +31,7 @@ object VideoSequence {
 
     for (i <- 0 until rc.readCount.getOrElse(0)) {
       val source = Source.fromURL(url)
-      val chars = source.getLines.mkString("\n")
+      val chars  = source.getLines.mkString("\n")
       source.close()
       assert(chars.length == 100)
     }

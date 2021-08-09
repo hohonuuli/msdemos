@@ -9,20 +9,18 @@ import io.helidon.media.jsonb.JsonbSupport
 import io.helidon.webserver.cors.CorsSupport
 import io.helidon.webserver.cors.CrossOriginConfig
 
-/**
- * Helidon
- * 
- * Notes:
- *  - Java framework
- *  - Uses JSON-B for serialization. To parse a request body, a case class wouldn't work
- *    so I created a java object bu I think a scala class with BeanProperty annotations would 
- *    also work. JSON-B serializes case classes annotated with @BeanProperty's just
- *    just fine though. Make sure you convert collections to java versions though. Also
- *    you're class will need a better for any serialized collections it owns that 
- *    returns a java collection instead of a scala collection.
- *  - I followed the helidon guide to add CORS support but it causes the scala 3 compiler
- *    to throw and error due to cyclic references.
- */
+/** Helidon
+  *
+  * Notes:
+  *   - Java framework
+  *   - Uses JSON-B for serialization. To parse a request body, a case class wouldn't work so I created a java object bu
+  *     I think a scala class with BeanProperty annotations would also work. JSON-B serializes case classes annotated
+  *     with @BeanProperty's just just fine though. Make sure you convert collections to java versions though. Also
+  *     you're class will need a better for any serialized collections it owns that returns a java collection instead of
+  *     a scala collection.
+  *   - I followed the helidon guide to add CORS support but it causes the scala 3 compiler to throw and error due to
+  *     cyclic references.
+  */
 object Main {
 
   def main(args: Array[String]): Unit = startServer()

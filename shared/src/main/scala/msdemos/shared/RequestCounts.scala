@@ -8,5 +8,5 @@ final case class RequestCounts(
     @BeanProperty k: Int,
     readCount: Option[Int] = None
 ) {
-    def getReadCount: Int = readCount.getOrElse(0)
+  def getReadCount: Int = readCount.getOrElse(0)
 }
