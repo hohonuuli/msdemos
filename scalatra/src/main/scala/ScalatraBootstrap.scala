@@ -3,6 +3,7 @@ import javax.servlet.ServletContext
 import msdemos.scalatra.MediaApi
 import scala.concurrent.ExecutionContext
 import msdemos.shared.CustomExecutors
+import msdemos.shared.CustomExecutors.asScala
 
 class ScalatraBootstrap extends LifeCycle {
 
@@ -18,7 +19,7 @@ class ScalatraBootstrap extends LifeCycle {
       "GET, POST, ORIGIN"
     )
 
-    val executionContext = ExecutionContext.fromExecutorService(CustomExecutors.newForkJoinPool())
+    val executionContext = CustomExecutors.newFixedThreadPoolExecutor().asScala
 
     context.mount(MediaApi(executionContext), "/media/demo")
 

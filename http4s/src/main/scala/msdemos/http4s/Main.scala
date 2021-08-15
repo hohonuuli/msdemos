@@ -10,6 +10,7 @@ import org.http4s.circe.CirceEntityCodec.*
 import org.http4s.ember.server.EmberServerBuilder
 import scala.concurrent.ExecutionContext
 import msdemos.shared.CustomExecutors
+import msdemos.shared.CustomExecutors.asScala
 import msdemos.shared.RequestCounts
 import msdemos.shared.VideoSequence
 import msdemos.shared.CirceCodecs.{given}
@@ -28,7 +29,7 @@ import org.http4s.server.middleware.CORS
   */
 object Main extends IOApp {
 
-  given ExecutionContext = ExecutionContext.fromExecutorService(CustomExecutors.newForkJoinPool())
+  given ExecutionContext = CustomExecutors.newFixedThreadPoolExecutor().asScala
 
   object ReadCountQueryParamMatcher extends OptionalQueryParamDecoderMatcher[Int]("readCount")
 

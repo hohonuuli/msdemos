@@ -10,11 +10,18 @@ object CustomExecutors {
 
   val ThreadCount = java.lang.Runtime.getRuntime().availableProcessors()
 
-  def newFixedThreadPoolExecutor(): ExecutorService = Executors.newFixedThreadPool(ThreadCount)
+  /**
+   * Best for IO bound tasks.
+   * @param n Mu
+   */
+  def newFixedThreadPoolExecutor(n: Int = ThreadCount): ExecutorService = Executors.newFixedThreadPool(n)
 
+  /**
+   * Best for CPU bound tasks
+   */
   def newForkJoinPool(): ExecutorService = new ForkJoinPool(ThreadCount)
 
   extension (executorService: ExecutorService) {
-    def asScala() = ExecutionContext.fromExecutorService(executorService)
+    def asScala: ExecutionContext = ExecutionContext.fromExecutorService(executorService)
   }
 }
