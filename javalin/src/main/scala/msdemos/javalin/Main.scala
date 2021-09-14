@@ -6,10 +6,10 @@ import msdemos.shared.{JacksonBuilder, RequestCounts, ResponseBuilder, VideoSequ
 import msdemos.shared.jdk.RequestCounts as JRequestCounts
 
 import scala.jdk.CollectionConverters._
-import _root_.io.javalin.core.validation.JavalinValidation
+import io.javalin.core.validation.JavalinValidation
 
 import java.time.Instant
-import _root_.io.javalin.plugin.json.JavalinJackson
+import io.javalin.plugin.json.JavalinJackson
 
 /** Javalin
   *
@@ -23,12 +23,14 @@ object Main {
   def main(args: Array[String]): Unit = {
 
     val app = Javalin
-      .create(config => config.enableCorsForAllOrigins())
+      .create(config => {
+        config.enableCorsForAllOrigins()
+        config.jsonMapper(JavalinJackson(JacksonBuilder.build()))
+      })
       .start(8080)
 
-    JavalinJackson.configure(JacksonBuilder.build())
 
-    app.get("/media/demo/:i/:j/:k", handleGet)
+    app.get("/media/demo/{i}/{j}/{k}", handleGet)
     app.post("/media/demo", handlePost)
   }
 
@@ -36,7 +38,8 @@ object Main {
     val i         = ctx.pathParam("i").toInt
     val j         = ctx.pathParam("j").toInt
     val k         = ctx.pathParam("k").toInt
-    val readCount = ctx.queryParam("readCount", "0").toInt
+    val readCount = ctx.queryParamAsClass("readCount", classOf[Integer])
+                       .getOrDefault(0)
     val rc        = RequestCounts(i, j, k, Option(readCount))
     ctx.json(VideoSequence.fromBlocking(rc).asJava)
   }
