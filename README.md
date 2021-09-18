@@ -10,8 +10,6 @@ Framework requirements:
 
 ## Test cases:
 
-- GET /text - Returns the string "Hello World".
-
 - GET /media/demo/{i}/{j}/{k} - Return a json response of random data with #i videosequences each containing #j videos each containing #k videoreferences
 
 - POST /media/demo - Same as get above but parses a JSON request body of:
