@@ -21,7 +21,7 @@ object Dependencies {
   lazy val helidonMedia      = "io.helidon.media"     % "helidon-media-jsonb"    % helidonVersion
   lazy val helidonWebserver  = "io.helidon.webserver" % "helidon-webserver"      % helidonVersion
 
-  private val http4sVersion  = "0.23.3"
+  private val http4sVersion  = "0.23.4"
   lazy val http4sCirce       = "org.http4s" %% "http4s-circe"        % http4sVersion
   lazy val http4sCore        = "org.http4s" %% "http4s-core"         % http4sVersion
   lazy val http4sDsl         = "org.http4s" %% "http4s-dsl"          % http4sVersion
@@ -45,7 +45,7 @@ object Dependencies {
 
   lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.6"
 
-  private val scalatraVersion = "2.8.0"
+  private val scalatraVersion = "2.8.2"
   lazy val scalatra           = ("org.scalatra" %% "scalatra"      % scalatraVersion).cross(CrossVersion.for3Use2_13)
   lazy val scalatraJson       = ("org.scalatra" %% "scalatra-json" % scalatraVersion).cross(CrossVersion.for3Use2_13)
 

@@ -63,7 +63,7 @@ object Main {
 
     // get query params
     val readCount = ctx
-      .queryParam("readCouunt")
+      .queryParam("readCount")
       .asScala
       .map(_.toInt)
       .headOption
