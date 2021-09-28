@@ -1,0 +1,8 @@
+Running 3s test @ http://m3.shore.mbari.org/kb/v1/phylogeny/up/Nanomia
+  4 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.29ms    2.00ms  25.97ms   91.03%
+    Req/Sec   477.95     89.36   730.00     79.51%
+  5816 requests in 3.10s, 19.97MB read
+Requests/sec:   1873.41
+Transfer/sec:      6.43MB
