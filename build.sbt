@@ -4,7 +4,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 ThisBuild / organization := "org.mbari"
 ThisBuild / version := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "3.0.2"
+ThisBuild / scalaVersion := "3.1.0"
 ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
 lazy val shared = (project in file("shared"))
