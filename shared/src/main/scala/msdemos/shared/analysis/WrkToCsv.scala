@@ -22,27 +22,7 @@ case class WkrResults(
   dataTransferedMb: Double,
   transferRateMbSec: Double)
 
-object WrkToCsv {
-  def main(args: Array[String]): Unit = {
-    val directory = Paths.get(args(0))
-    val substring = args(1)
-    val csv = Paths.get(args(2))
-
-    val t = Using(Files.list(directory)) { iter =>
-      iter.filter(file => !Files.isDirectory(file) && file.toString.contains(substring))
-        .collect(Collectors.toList())
-        .asScala
-    }
-
-    t match {
-      case Success(files) =>
-        val wrkFiles = files.map(file => parse(file))
-        writeAsCsv(csv, wrkFiles)
-      case Failure(e) =>
-        throw e
-    }
-
-  }
+object WrkResults {
 
   def parse(wrkFile: Path): WkrResults = {
     val lines = scala.io.Source.fromFile(wrkFile.toFile).getLines.toList
@@ -70,18 +50,40 @@ object WrkToCsv {
 
   }
 
-  def writeAsCsv(target: Path, results: Iterable[WkrResults]): Unit = {
+}
+
+object WrkToCsv {
+  def main(args: Array[String]): Unit = {
+    val directory = Paths.get(args(0))
+    val substring = args(1)
+    val csv = Paths.get(args(2))
+
+    val t = Using(Files.list(directory)) { iter =>
+      iter.filter(file => !Files.isDirectory(file) && file.toString.contains(substring))
+        .collect(Collectors.toList())
+        .asScala
+    }
+
+    t match {
+      case Success(files) =>
+        val wrkFiles = files.map(file => WrkResults.parse(file)).toList
+        writeAsCsv(csv, wrkFiles)
+      case Failure(e) =>
+        throw e
+    }
+
+  }
+
+  
+
+  def writeAsCsv(target: Path, results: List[WkrResults]): Unit = {
 
     import msdemos.shared.analysis.{given, *}
     Using(Files.newBufferedWriter(target)) { writer =>
-      writer.write(asHeader(results.head))
-      results.foreach(r => {
-        writer.write(transform(r))
-        writer.write("\n")
-      })
+      val csv = transform(results)
+      writer.write(csv)
     }
     
   }
-
 
 }

@@ -29,12 +29,25 @@ given Transformer[URL] with
 given Transformer[Path] with
   def f(x: Path) = x.getFileName.toString
 
-// given [A : Transformer] : Transformer[List[A]] =
-//   new Transformer[List[A]]:
-//     def f(x: List[A]) = x.map(transform).mkString("\n")
+given [T] (using t: Transformer[T]): Transformer[Option[T]] = 
+  new Transformer[Option[T]]:
+    def f(x: Option[T]) = x match
+      case None => ""
+      case Some(x) => t.f(x)
+
+/**
+ * Transforms a list of case classes into CSV data, including header row
+ */
+given [A <: Product] (using t: Transformer[A]): Transformer[List[A]] =
+  new Transformer[List[A]]:
+    def f(x: List[A]) = 
+      val rows = asHeader(x.head) :: x.map(transform)
+      rows.mkString("\n")
 
 /**
  * Turns a case class into a CSV row string
+ * 
+ * Fucking voodoo from https://kavedaa.github.io/auto-ui-generation/auto-ui-generation.html
  */
 inline given [A <: Product] (using m: Mirror.ProductOf[A]): Transformer[A] =
   new Transformer[A]:
