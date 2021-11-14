@@ -10,6 +10,7 @@ import java.util.stream.Collectors
 import scala.util.Success
 import scala.util.Failure
 import scala.jdk.CollectionConverters.*
+import scala.util.Try
 
 case class WkrResults(
   src: Path,
@@ -25,6 +26,7 @@ case class WkrResults(
 object WrkResults {
 
   def parse(wrkFile: Path): WkrResults = {
+    println(wrkFile)
     val lines = scala.io.Source.fromFile(wrkFile.toFile).getLines.toList
 
     def splitLine(line: String): Array[String] = {
@@ -36,15 +38,26 @@ object WrkResults {
     val line3 = splitLine(lines(3))
     println(line3.toList)
     val latency = line3(1).replace("ms", "").toDouble
-    val latencyStd = line3(2).replace("ms", "").toDouble
+    val latencyStd = if (line3(2).contains("us")) {
+      line3(2).replace("us", "").toDouble / 1000
+    }
+    else {
+     line3(2).replace("ms", "").toDouble
+    }
 
     val line5 = splitLine(lines(5))
+    println(line5.toList)
     val numberOfRequests = line5(0).toInt
     val durationSec = line5(3).replace("s,", "").toDouble
-    val transferMb = line5(4).replace("MB", "").toDouble
+    val transferMb = if (line5(4).contains("GB")) {
+      line5(4).replace("GB", "").toDouble * 1024
+    } 
+    else {
+      line5(4).replace("MB", "").toDouble
+    }
 
-    val requestsSec = splitLine(lines(6))(1).toDouble
-    val transferSec = splitLine(lines(7))(1).replace("MB", "").toDouble
+    val requestsSec = splitLine(lines(7))(1).toDouble
+    val transferSec = splitLine(lines(8))(1).replace("MB", "").toDouble
 
     WkrResults(wrkFile, url, latency, latencyStd, requestsSec, numberOfRequests, durationSec, transferMb, transferSec)
 
@@ -66,7 +79,8 @@ object WrkToCsv {
 
     t match {
       case Success(files) =>
-        val wrkFiles = files.map(file => WrkResults.parse(file)).toList
+        val wrkFiles = files.map(file => WrkResults.parse(file))
+          .toList
         writeAsCsv(csv, wrkFiles)
       case Failure(e) =>
         throw e

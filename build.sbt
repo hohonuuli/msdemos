@@ -8,6 +8,7 @@ ThisBuild / scalaVersion := "3.1.0"
 ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
 lazy val shared = (project in file("shared"))
+  .enablePlugins(JavaAppPackaging)
   .settings(
     name := "shared",
     libraryDependencies ++= Seq(
