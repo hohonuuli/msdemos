@@ -41,4 +41,7 @@ For more information on the sbt-dotty plugin, see the
 
 ```bash
 docker run -p 8192:8192 -v (pwd):/opt/polynote/notebooks --name polynote mbari/polynote
+
+# On Apple Silicon
+docker run -p 8192:8192 -v (pwd):/opt/polynote/notebooks --name polynote --platform linux/arm64 mbari/polynote
 ```
