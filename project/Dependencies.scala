@@ -43,7 +43,7 @@ object Dependencies {
 
   lazy val junit = "com.github.sbt" % "junit-interface" % "0.13.2"
 
-  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.6"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.7"
 
   private val scalatraVersion = "2.8.2"
   lazy val scalatra           = ("org.scalatra" %% "scalatra"      % scalatraVersion).cross(CrossVersion.for3Use2_13)
@@ -51,7 +51,7 @@ object Dependencies {
 
   lazy val sparkJava = "com.sparkjava" % "spark-core" % "2.9.3"
 
-  lazy val vertxWeb = "io.vertx" % "vertx-web" % "4.2.0"
+  lazy val vertxWeb = "io.vertx" % "vertx-web" % "4.2.1"
 
   lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC17"
 
