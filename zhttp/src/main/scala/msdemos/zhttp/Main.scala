@@ -1,10 +1,14 @@
 package msdemos.zhttp
 
 import msdemos.shared.{CirceHelper, RequestCounts, ResponseBuilder, VideoSequence}
+import scala.language.postfixOps
+import zhttp.endpoint.*
 import zhttp.http.*
+import zhttp.http.Middleware.cors
 import zhttp.service.*
 import zhttp.service.server.ServerChannelFactory
 import zio.*
+
 
 /** zio http
   *
@@ -29,19 +33,26 @@ object Main extends App {
       val rc = RequestCounts(i.toInt, j.toInt, k.toInt, readCount)
       Response.jsonString(CirceHelper.buildJsonResponse(rc))
 
-    case req @ Method.POST -> Root / "media" / "demo" =>
-      req.getBodyAsString match {
-        case Some(s) => Response.jsonString(CirceHelper.buildJsonResponse(s))
-        case None    => Response.status(Status.BAD_REQUEST)
-      }
 
-  }
+  } @@ cors(CORS.DefaultCORSConfig) // RC18 handles CORS differently
+
+  // As of RC18, getBodyAsString returns a zio.Task instead of an Option.
+  val appM = Http.collectM {
+    case req @ Method.POST -> Root / "media" / "demo" =>
+      for {
+        body <- req.getBodyAsString
+      } yield {
+        Option(body) match {
+          case Some(s) => Response.jsonString(CirceHelper.buildJsonResponse(s))
+          case None => Response.status(Status.BAD_REQUEST)
+        }
+      }
+  } @@ cors(CORS.DefaultCORSConfig)
 
   private val port = 8080
   private val server =
     Server.port(port) ++    // Setup port
-      Server.app(CORS(app)) // Setup the Http app
-
+      Server.app(app <> appM) // Setup the Http app
   override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] = {
     // Barebones server had 25% error response in testing
     //Server.start(8080, CORS(app)).exitCode

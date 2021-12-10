@@ -21,7 +21,7 @@ object Dependencies {
   lazy val helidonMedia      = "io.helidon.media"     % "helidon-media-jsonb"    % helidonVersion
   lazy val helidonWebserver  = "io.helidon.webserver" % "helidon-webserver"      % helidonVersion
 
-  private val http4sVersion  = "0.23.6"
+  private val http4sVersion  = "0.23.7"
   lazy val http4sCirce       = "org.http4s" %% "http4s-circe"        % http4sVersion
   lazy val http4sCore        = "org.http4s" %% "http4s-core"         % http4sVersion
   lazy val http4sDsl         = "org.http4s" %% "http4s-dsl"          % http4sVersion
@@ -53,6 +53,6 @@ object Dependencies {
 
   lazy val vertxWeb = "io.vertx" % "vertx-web" % "4.2.1"
 
-  lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC17"
+  lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC18"
 
 }
