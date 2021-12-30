@@ -53,6 +53,6 @@ object Dependencies {
 
   lazy val vertxWeb = "io.vertx" % "vertx-web" % "4.2.3"
 
-  lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC17"
+  lazy val zhttp = "io.d11" %% "zhttp" % "1.0.0.0-RC18"
 
 }
