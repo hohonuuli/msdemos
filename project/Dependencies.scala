@@ -6,7 +6,7 @@ object Dependencies {
   lazy val akkaHttp   = ("com.typesafe.akka" %% "akka-http"        % "10.2.7").cross(CrossVersion.for3Use2_13)
   lazy val akkaStream = ("com.typesafe.akka" %% "akka-stream"      % "2.6.17").cross(CrossVersion.for3Use2_13)
 
-  lazy val cask = "com.lihaoyi" %% "cask" % "0.7.12"
+  lazy val cask = "com.lihaoyi" %% "cask" % "0.8.0"
 
   private val circeVersion = "0.14.1"
   lazy val circeCore       = "io.circe" %% "circe-core"    % circeVersion
