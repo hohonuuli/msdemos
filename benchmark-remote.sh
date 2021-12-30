@@ -24,13 +24,13 @@ ssh $USER@$REMOTE_HOST <<ENDSSH
 
   jmeter -n -t "$DATA_DIR/msdemo-test1.jmx" -l "$DATA_RESULTS_DIR/$FRAMEWORK-jmeter.csv" -e -o "$DATA_RESULTS_DIR" && \
   sleep 2 && \
-  wrk -t4 -c400 -d20s "http://$IP_ADDRESS:8080/media/demo/4/4/4" > "$DATA_DIR/$FRAMEWORK-wrk1.txt" && \
+  wrk -t4 -c400 -d20s "http://$IP_ADDRESS:8080/media/demo/4/4/4" > "$DATA_RESULTS_DIR/$FRAMEWORK-wrk1.txt" && \
   sleep 2 && \
-  wrk -t4 -c400 -d20s "http://$IP_ADDRESS:8080/media/demo/4/4/4?readCount=20" > "$DATA_DIR/$FRAMEWORK-wrk2.txt" && \
+  wrk -t4 -c400 -d20s "http://$IP_ADDRESS:8080/media/demo/4/4/4?readCount=20" > "$DATA_RESULTS_DIR/$FRAMEWORK-wrk2.txt" && \
   sleep 2 && \
-  # autocannon -c 100 -d 20 -p 10 -j "http://$IP_ADDRESS:8080/media/demo/4/4/4" > "$DATA_DIR/$FRAMEWORK-autocannon1.json" && \
+  # autocannon -c 100 -d 20 -p 10 -j "http://$IP_ADDRESS:8080/media/demo/4/4/4" > "$DATA_RESULTS_DIR/$FRAMEWORK-autocannon1.json" && \
   # sleep 2 && \
-  # autocannon -c 100 -d 20 -p 10 -j "http://$IP_ADDRESS:8080/media/demo/4/4/4?readCount=20" > "$DATA_DIR/$FRAMEWORK-autocannon2.json"
+  # autocannon -c 100 -d 20 -p 10 -j "http://$IP_ADDRESS:8080/media/demo/4/4/4?readCount=20" > "$DATA_RESULTS_DIR/$FRAMEWORK-autocannon2.json"
   
   scp -rp $DATA_RESULTS_DIR $USER@$IP_ADDRESS:$RESULTS_DIR
   rm -rf $DATA_DIR
